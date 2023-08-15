@@ -1,0 +1,11 @@
+com/upload/infraestructure/entity/LoadData.class
+com/upload/infraestructure/entity/QLoadDetail.class
+com/upload/infraestructure/entity/Load.class
+com/upload/domain/core/UploadServiceImpl.class
+com/upload/UploadApplication.class
+com/upload/infraestructure/entity/LoadDetail.class
+com/upload/infraestructure/entity/QLoad.class
+com/upload/infraestructure/entity/QLoadData.class
+com/upload/config/SwaggerConfig.class
+com/upload/infraestructure/repository/LoadRepository.class
+com/upload/domain/core/UploadService.class
