@@ -1,1 +1,4 @@
+com/upload/infraestructure/repository/LoadRepositoryTest.class
+com/upload/application/api/UploadApiTest.class
 com/upload/UploadApplicationTests.class
+com/upload/infraestructure/repository/LoadDataRepositoryTest.class

@@ -1,0 +1,14 @@
+<beanio xmlns="http://www.beanio.org/2012/03"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/beanio.xsd">
+
+    <stream name="formatLoadFile" format="csv">
+        <parser>
+            <property name="delimiter" value=","/>
+        </parser>
+        <record name="row" class="com.upload.application.api.model.FileRow">
+            <field name="site" position="0"/>
+            <field name="id" position="1"/>
+        </record>
+    </stream>
+</beanio>

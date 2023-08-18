@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MercadoLibreService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">upload</a> &gt; <a href="index.source.html" class="el_package">com.upload.domain.core.external</a> &gt; <span class="el_source">MercadoLibreService.java</span></div><h1>MercadoLibreService.java</h1><pre class="source lang-java linenums">package com.upload.domain.core.external;
+
+import com.upload.application.api.model.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+<span class="fc" id="L15">@Slf4j</span>
+<span class="fc" id="L16">public class MercadoLibreService extends ResTemplateAbstrad {</span>
+
+    @Value(&quot;${client.mercadolibre.api.url}&quot;)
+    private String apiUrl;
+
+    public List&lt;ItemResponse&gt; findItems(List&lt;String&gt; ids) {
+        try {
+<span class="fc" id="L23">            ResponseEntity&lt;List&lt;ItemResponse&gt;&gt; response = findByParameter(apiUrl + &quot;/items?ids=&quot; +</span>
+<span class="fc" id="L24">                            String.join(&quot;,&quot;, ids),</span>
+<span class="fc" id="L25">                    new ParameterizedTypeReference&lt;List&lt;ItemResponse&gt;&gt;() {});</span>
+<span class="fc" id="L26">            return response.getBody();</span>
+<span class="nc" id="L27">        } catch (Exception e) {</span>
+<span class="nc" id="L28">            log.error(&quot;Error consultando los iems&quot; + e.getMessage());</span>
+        }
+<span class="nc" id="L30">        return Collections.emptyList();</span>
+    }
+
+    public List&lt;CurrencyResponse&gt; getCurrencies() {
+        try {
+<span class="fc" id="L35">            ResponseEntity&lt;List&lt;CurrencyResponse&gt;&gt; response = findByParameter(apiUrl + &quot;/currencies&quot;,</span>
+<span class="fc" id="L36">                    new ParameterizedTypeReference&lt;List&lt;CurrencyResponse&gt;&gt;() {});</span>
+<span class="fc" id="L37">            return response.getBody();</span>
+<span class="nc" id="L38">        } catch (Exception e) {</span>
+<span class="nc" id="L39">            log.error(&quot;Error consultando las monedas&quot; + e.getMessage());</span>
+        }
+<span class="nc" id="L41">        return Collections.emptyList();</span>
+    }
+
+    public List&lt;SitesResponse&gt; getSites() {
+        try {
+<span class="fc" id="L46">            ResponseEntity&lt;List&lt;SitesResponse&gt;&gt; response = findByParameter(apiUrl + &quot;/sites&quot;,</span>
+<span class="fc" id="L47">                    new ParameterizedTypeReference&lt;List&lt;SitesResponse&gt;&gt;() {});</span>
+<span class="fc" id="L48">            return response.getBody();</span>
+<span class="nc" id="L49">        } catch (Exception e) {</span>
+<span class="nc" id="L50">            log.error(&quot;Error consultando las ubicaciones&quot; + e.getMessage());</span>
+        }
+<span class="nc" id="L52">        return Collections.emptyList();</span>
+    }
+
+    public List&lt;CategoryResponse&gt; getCategoriesBySite(String site) {
+        try {
+<span class="fc" id="L57">            ResponseEntity&lt;List&lt;CategoryResponse&gt;&gt; response = findByParameter(apiUrl + &quot;/sites/&quot; + site + &quot;/categories&quot;,</span>
+<span class="fc" id="L58">                    new ParameterizedTypeReference&lt;List&lt;CategoryResponse&gt;&gt;() {});</span>
+<span class="fc" id="L59">            return response.getBody();</span>
+<span class="nc" id="L60">        } catch (Exception e) {</span>
+<span class="nc" id="L61">            log.error(&quot;Error consultando las categorias&quot; + e.getMessage());</span>
+        }
+<span class="nc" id="L63">        return Collections.emptyList();</span>
+    }
+
+    public List&lt;UserResponse&gt; getUsersByIds(List&lt;Long&gt; ids) {
+        try {
+<span class="fc" id="L68">            ResponseEntity&lt;List&lt;UserResponse&gt;&gt; response = findByParameter(apiUrl + &quot;/users?ids=&quot; +</span>
+<span class="fc" id="L69">                            ids.stream().map(String::valueOf).collect(Collectors.joining(&quot;,&quot;)),</span>
+<span class="fc" id="L70">                    new ParameterizedTypeReference&lt;List&lt;UserResponse&gt;&gt;() {});</span>
+<span class="fc" id="L71">            return response.getBody();</span>
+<span class="nc" id="L72">        } catch (Exception e) {</span>
+<span class="nc" id="L73">            log.error(&quot;Error consultando los usuarios&quot; + e.getMessage());</span>
+        }
+<span class="nc" id="L75">        return Collections.emptyList();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

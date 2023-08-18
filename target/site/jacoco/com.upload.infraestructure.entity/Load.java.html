@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Load.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">upload</a> &gt; <a href="index.source.html" class="el_package">com.upload.infraestructure.entity</a> &gt; <span class="el_source">Load.java</span></div><h1>Load.java</h1><pre class="source lang-java linenums">package com.upload.infraestructure.entity;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+
+@Getter
+<span class="pc" id="L14">@Setter</span>
+@Entity
+@Table(name=&quot;load&quot;, schema = &quot;upload&quot;)
+<span class="fc" id="L17">public class Load {</span>
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = &quot;id&quot;)
+<span class="fc" id="L23">	private Long id;</span>
+
+	@Schema(description = &quot;Fecha de inicio de la carga&quot;)
+	@Column(name=&quot;start_date&quot;)
+	@NotNull
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+<span class="fc" id="L30">	private LocalDateTime startDate;</span>
+
+	@Schema(description = &quot;Fecha de finalización de la carga&quot;)
+	@Column(name=&quot;end_date&quot;)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+<span class="fc" id="L36">	private LocalDateTime endDate;</span>
+
+	@Schema(description = &quot;Estado de la carga&quot;)
+	@Column(name=&quot;status&quot;)
+	@NotNull
+<span class="fc" id="L41">	private String status;</span>
+
+	@Schema(description = &quot;Nombre del archivo cargado&quot;)
+	@Column(name=&quot;fileName&quot;)
+	@NotNull
+<span class="fc" id="L46">	private String fileName;</span>
+
+	@Schema(description = &quot;Error generado en la carga&quot;)
+	@Column(name=&quot;error&quot;)
+<span class="fc" id="L50">	private String error;</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

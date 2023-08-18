@@ -5,12 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
 @Getter
 @Setter
 @Entity
@@ -23,10 +19,15 @@ public class LoadData {
 	@Column(name = "id")
 	private String id;
 
+	@NotNull
+	@Schema(description = "Id de la carga")
+	@Column(name="load_id")
+	private Long loadId;
+
 	@Schema(description = "Id del resgistro")
 	@Column(name = "record_id")
 	@NotNull
-	private String record_id;
+	private String recordId;
 
 	@Schema(description = "Precio")
 	@Column(name = "price")
@@ -34,7 +35,18 @@ public class LoadData {
 
 	@Schema(description = "Fecha de inicio")
 	@Column(name="start_time")
-	@NotNull
-	private Date startTime;
+	private LocalDateTime startTime;
+
+	@Schema(description = "Nombre de la categoria")
+	@Column(name = "name")
+	private String name;
+
+	@Schema(description = "Moneda")
+	@Column(name = "description")
+	private String description;
+
+	@Schema(description = "Nombre de usuario")
+	@Column(name = "nickname")
+	private String nickname;
 
 }

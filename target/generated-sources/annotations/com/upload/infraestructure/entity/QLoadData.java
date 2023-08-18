@@ -19,13 +19,21 @@ public class QLoadData extends EntityPathBase<LoadData> {
 
     public static final QLoadData loadData = new QLoadData("loadData");
 
+    public final StringPath description = createString("description");
+
     public final StringPath id = createString("id");
+
+    public final NumberPath<Long> loadId = createNumber("loadId", Long.class);
+
+    public final StringPath name = createString("name");
+
+    public final StringPath nickname = createString("nickname");
 
     public final NumberPath<Double> price = createNumber("price", Double.class);
 
-    public final StringPath record_id = createString("record_id");
+    public final StringPath recordId = createString("recordId");
 
-    public final DateTimePath<java.util.Date> startTime = createDateTime("startTime", java.util.Date.class);
+    public final DateTimePath<java.time.LocalDateTime> startTime = createDateTime("startTime", java.time.LocalDateTime.class);
 
     public QLoadData(String variable) {
         super(LoadData.class, forVariable(variable));

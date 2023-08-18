@@ -19,11 +19,15 @@ public class QLoad extends EntityPathBase<Load> {
 
     public static final QLoad load = new QLoad("load");
 
-    public final DateTimePath<java.util.Date> endDate = createDateTime("endDate", java.util.Date.class);
+    public final DateTimePath<java.time.LocalDateTime> endDate = createDateTime("endDate", java.time.LocalDateTime.class);
+
+    public final StringPath error = createString("error");
+
+    public final StringPath fileName = createString("fileName");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final DateTimePath<java.util.Date> startDate = createDateTime("startDate", java.util.Date.class);
+    public final DateTimePath<java.time.LocalDateTime> startDate = createDateTime("startDate", java.time.LocalDateTime.class);
 
     public final StringPath status = createString("status");
 
