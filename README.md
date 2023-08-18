@@ -1,6 +1,6 @@
 ## Tabla de contenidos
 1. [Información general](#informacin-general)
-2. [Tecnologias](#tecnologias)
+2. [Tecnologías](#tecnologas)
 3. [Instalación](#instalacin)
 4. [Servicios expuestos](#servicios-expuestos)
 5. [Lectura del archivo](#lectura-del-archivo)
@@ -13,7 +13,7 @@ públicas de MercadoLibre y almacenar una base de datos con los datos del archiv
 
 [![CI](https://github.com/flori/json/actions/workflows/ci.yml/badge.svg)](https://github.com/flori/json/actions/workflows/ci.yml)
 
-## Tecnologias
+## Tecnologías
 ***
 * [JAVA](https://www.java.com/es/): Versión 11
 * [Maven](https://maven.apache.org/): Versión 2.7.7
