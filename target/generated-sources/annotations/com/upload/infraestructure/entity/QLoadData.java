@@ -33,6 +33,8 @@ public class QLoadData extends EntityPathBase<LoadData> {
 
     public final StringPath recordId = createString("recordId");
 
+    public final StringPath site = createString("site");
+
     public final DateTimePath<java.time.LocalDateTime> startTime = createDateTime("startTime", java.time.LocalDateTime.class);
 
     public QLoadData(String variable) {

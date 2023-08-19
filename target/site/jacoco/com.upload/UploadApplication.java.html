@@ -61,9 +61,9 @@ import java.util.concurrent.Executor;
 	public Executor taskExecutor() {
 <span class="fc" id="L62">		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();</span>
 <span class="fc" id="L63">		executor.setCorePoolSize(2);</span>
-<span class="fc" id="L64">		executor.setMaxPoolSize(2);</span>
-<span class="fc" id="L65">		executor.setQueueCapacity(500);</span>
-<span class="fc" id="L66">		executor.setThreadNamePrefix(&quot;GithubLookup-&quot;);</span>
+<span class="fc" id="L64">		executor.setMaxPoolSize(10);</span>
+<span class="fc" id="L65">		executor.setQueueCapacity(20);</span>
+<span class="fc" id="L66">		executor.setKeepAliveSeconds(120);</span>
 <span class="fc" id="L67">		executor.initialize();</span>
 <span class="fc" id="L68">		return executor;</span>
 	}

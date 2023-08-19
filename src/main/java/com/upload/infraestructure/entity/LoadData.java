@@ -20,6 +20,11 @@ public class LoadData {
 	private String id;
 
 	@NotNull
+	@Schema(description = "Id del sitio")
+	@Column(name="site")
+	private String site;
+
+	@NotNull
 	@Schema(description = "Id de la carga")
 	@Column(name="load_id")
 	private Long loadId;

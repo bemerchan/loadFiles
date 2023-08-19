@@ -69,10 +69,10 @@ import java.util.stream.Collectors;
 <span class="fc" id="L69">                            ids.stream().map(String::valueOf).collect(Collectors.joining(&quot;,&quot;)),</span>
 <span class="fc" id="L70">                    new ParameterizedTypeReference&lt;List&lt;UserResponse&gt;&gt;() {});</span>
 <span class="fc" id="L71">            return response.getBody();</span>
-<span class="nc" id="L72">        } catch (Exception e) {</span>
-<span class="nc" id="L73">            log.error(&quot;Error consultando los usuarios&quot; + e.getMessage());</span>
+<span class="fc" id="L72">        } catch (Exception e) {</span>
+<span class="fc" id="L73">            log.error(&quot;Error consultando los usuarios&quot; + e.getMessage());</span>
         }
-<span class="nc" id="L75">        return Collections.emptyList();</span>
+<span class="fc" id="L75">        return Collections.emptyList();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

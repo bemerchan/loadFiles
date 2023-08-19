@@ -35,8 +35,6 @@ import java.util.stream.Collectors;
     LoadDataServices loadDataServices;
     List&lt;LoadData&gt; listData;
 <span class="fc" id="L37">    Map&lt;Long, String&gt; mapUsers = new HashMap&lt;&gt;();</span>
-    @Value(&quot;${config.upload.sites}&quot;)
-    private String sites;
     @Value(&quot;${config.process.search.data.size}&quot;)
     private int processDataSize;
     @Value(&quot;${config.process.save.data.size}&quot;)
@@ -45,64 +43,66 @@ import java.util.stream.Collectors;
     @Async
     public void processFile(MultipartFile multipartFile, Load load)  {
         try {
-<span class="fc" id="L48">            listData = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L49">            BeanReader data = FileUtil.readData(multipartFile);</span>
+<span class="fc" id="L46">            listData = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L47">            BeanReader data = FileUtil.readData(multipartFile);</span>
             Object record;
-<span class="fc" id="L51">            readData(load, data);</span>
-<span class="nc" id="L52">        } catch (Exception e) {</span>
-<span class="nc" id="L53">            load.setError(e.getMessage());</span>
-<span class="nc" id="L54">            loadService.updateStatusLoad(load, &quot;ERROR&quot;);</span>
-<span class="fc" id="L55">        }</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L49">            readData(load, data);</span>
+<span class="nc" id="L50">        } catch (Exception e) {</span>
+<span class="nc" id="L51">            load.setError(e.getMessage());</span>
+<span class="nc" id="L52">            loadService.updateStatusLoad(load, &quot;ERROR&quot;);</span>
+<span class="fc" id="L53">        }</span>
+<span class="fc" id="L54">    }</span>
 
     private void readData(Load load, BeanReader data) {
         Object record;
-<span class="fc" id="L60">        List&lt;FileRow&gt; rows = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        while ((record = data.read()) != null) {</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">            if(&quot;row&quot;.equals(data.getRecordName())) {</span>
-<span class="fc" id="L63">                FileRow row = (FileRow) record;</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">                if(!&quot;id&quot;.equals(row.getId())) {</span>
-<span class="fc" id="L65">                    rows.add(row);</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">                    if(rows.size() == processDataSize) {</span>
-<span class="nc" id="L67">                        processData(rows, load);</span>
-<span class="nc" id="L68">                        rows.clear();</span>
+<span class="fc" id="L58">        List&lt;FileRow&gt; rows = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        while ((record = data.read()) != null) {</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">            if(&quot;row&quot;.equals(data.getRecordName())) {</span>
+<span class="fc" id="L61">                FileRow row = (FileRow) record;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                if(!&quot;id&quot;.equals(row.getId())) {</span>
+<span class="fc" id="L63">                    rows.add(row);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">                    if(rows.size() == processDataSize) {</span>
+<span class="fc" id="L65">                        processData(rows, load);</span>
+<span class="fc" id="L66">                        rows.clear();</span>
                     }
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">                    if(listData.size() == processSaveSize) {</span>
-<span class="nc" id="L71">                        saveData(load);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">                    if(listData.size() &gt;= processSaveSize) {</span>
+<span class="fc" id="L69">                        saveData(load);</span>
                     }
                 }
 
-<span class="fc" id="L75">            }</span>
+<span class="fc" id="L73">            }</span>
         }
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if(!rows.isEmpty()) {</span>
-<span class="fc" id="L78">            processData(rows, load);</span>
-<span class="fc" id="L79">            saveData(load);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if(!rows.isEmpty()) {</span>
+<span class="fc" id="L76">            processData(rows, load);</span>
+<span class="fc" id="L77">            saveData(load);</span>
         }
-<span class="fc" id="L81">        loadService.updateStatusLoad(load, &quot;EXITOSO&quot;);</span>
-<span class="fc" id="L82">    }</span>
+<span class="fc" id="L79">        loadService.updateStatusLoad(load, &quot;EXITOSO&quot;);</span>
+<span class="fc" id="L80">    }</span>
 
     private void saveData(Load load) {
-<span class="fc" id="L85">        loadService.saveData(load, listData);</span>
-<span class="fc" id="L86">        listData.clear();</span>
-<span class="fc" id="L87">    }</span>
+<span class="fc" id="L83">        loadService.saveData(load, listData);</span>
+<span class="fc" id="L84">        listData.clear();</span>
+<span class="fc" id="L85">    }</span>
 
     private void processData(List&lt;FileRow&gt; rows, Load load) {
-<span class="fc" id="L90">        List&lt;String&gt; ids = rows.stream().map(row -&gt; row.getSite() + row.getId()).collect(Collectors.toList());</span>
-<span class="fc" id="L91">        List&lt;ItemResponse&gt; items = mercadoLibreService.findItems(ids);</span>
-<span class="fc" id="L92">        this.loadUsers(items);</span>
-<span class="fc" id="L93">        rows.forEach(row -&gt; {</span>
-<span class="fc" id="L94">            ItemResponse itemResponse = items.stream().filter(item -&gt;</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">                            HttpStatus.OK.value() == item.getCode() &amp;&amp;</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">                                    item.getBody() != null &amp;&amp;</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">                                    (row.getSite() + row.getId()).equals(item.getBody().getId()))</span>
-<span class="fc" id="L98">                    .findFirst().orElse(null);</span>
-<span class="fc" id="L99">            createLoadData(itemResponse, row, load);</span>
-<span class="fc" id="L100">        });</span>
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L88">        List&lt;String&gt; ids = rows.stream().map(row -&gt; row.getSite() + row.getId()).collect(Collectors.toList());</span>
+<span class="fc" id="L89">        List&lt;ItemResponse&gt; items = mercadoLibreService.findItems(ids);</span>
+<span class="fc" id="L90">        this.loadUsers(items);</span>
+<span class="fc" id="L91">        rows.forEach(row -&gt; {</span>
+<span class="fc" id="L92">            ItemResponse itemResponse = items.stream().filter(item -&gt;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                            HttpStatus.OK.value() == item.getCode() &amp;&amp;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                                    item.getBody() != null &amp;&amp;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">                                    (row.getSite() + row.getId()).equals(item.getBody().getId()))</span>
+<span class="fc" id="L96">                    .findFirst().orElse(null);</span>
+<span class="fc" id="L97">            createLoadData(itemResponse, row, load);</span>
+<span class="fc" id="L98">        });</span>
+<span class="fc" id="L99">    }</span>
 
     private void loadUsers(List&lt;ItemResponse&gt; items) {
-<span class="fc bfc" id="L104" title="All 2 branches covered.">       List&lt;Long&gt; ids = items.stream().filter(item -&gt; HttpStatus.OK.value() == item.getCode())</span>
-<span class="fc" id="L105">               .map(ItemResponse::getBody).map(ItemResponse.ItemBody::getSeller_id).collect(Collectors.toList());</span>
+<span class="fc" id="L102">       List&lt;Long&gt; ids = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">       items.stream().filter(item -&gt; HttpStatus.OK.value() == item.getCode()).collect(Collectors.toList()).forEach(</span>
+<span class="fc" id="L104">            itemResponse -&gt; ids.add(itemResponse.getBody().getSeller_id())</span>
+       );
 <span class="fc" id="L106">       ids.removeAll(mapUsers.keySet());</span>
 <span class="fc" id="L107">       List&lt;UserResponse&gt; userResponses = mercadoLibreService.getUsersByIds(ids);</span>
 <span class="pc bpc" id="L108" title="1 of 2 branches missed.">        userResponses.stream().filter(userResponse -&gt; HttpStatus.OK.value() == userResponse.getCode())</span>
@@ -113,19 +113,20 @@ import java.util.stream.Collectors;
 <span class="fc bfc" id="L113" title="All 2 branches covered.">        if(item != null) {</span>
 <span class="fc" id="L114">            ItemResponse.ItemBody body = item.getBody();</span>
 <span class="fc" id="L115">            LoadData data = new LoadData();</span>
-<span class="fc" id="L116">            data.setPrice(body.getPrice());</span>
-<span class="fc" id="L117">            data.setStartTime(body.getStart_time());</span>
-<span class="fc" id="L118">            data.setName(loadDataServices.getCategoryBySiteAndId(row.getSite(), body.getCategory_id()));</span>
-<span class="fc" id="L119">            data.setDescription(loadDataServices.getCurrency(body.getCurrency_id()));</span>
-<span class="fc" id="L120">            data.setNickname(getUserNickName(body.getSeller_id()));</span>
-<span class="fc" id="L121">            data.setLoadId(load.getId());</span>
-<span class="fc" id="L122">            data.setRecordId(body.getId());</span>
-<span class="fc" id="L123">            listData.add(data);</span>
+<span class="fc" id="L116">            data.setSite(row.getSite());</span>
+<span class="fc" id="L117">            data.setPrice(body.getPrice());</span>
+<span class="fc" id="L118">            data.setStartTime(body.getStart_time());</span>
+<span class="fc" id="L119">            data.setName(loadDataServices.getCategoryBySiteAndId(row.getSite(), body.getCategory_id()));</span>
+<span class="fc" id="L120">            data.setDescription(loadDataServices.getCurrency(body.getCurrency_id()));</span>
+<span class="fc" id="L121">            data.setNickname(getUserNickName(body.getSeller_id()));</span>
+<span class="fc" id="L122">            data.setLoadId(load.getId());</span>
+<span class="fc" id="L123">            data.setRecordId(body.getId());</span>
+<span class="fc" id="L124">            listData.add(data);</span>
         }
-<span class="fc" id="L125">    }</span>
+<span class="fc" id="L126">    }</span>
 
     private String getUserNickName(Long userId) {
-<span class="fc" id="L128">        return mapUsers.get(userId);</span>
+<span class="fc" id="L129">        return mapUsers.get(userId);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

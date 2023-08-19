@@ -24,7 +24,6 @@ com/upload/application/api/model/SitesResponse.class
 com/upload/config/SwaggerConfig.class
 com/upload/domain/core/load/LoadService.class
 com/upload/infraestructure/repository/LoadDataRepository.class
-com/upload/config/RestResponseEntityExceptionHandler.class
 com/upload/application/api/model/UserResponse$UserBody.class
 com/upload/UploadApplication$CustomStringToLocalDateTime.class
 com/upload/domain/core/external/MercadoLibreService$2.class

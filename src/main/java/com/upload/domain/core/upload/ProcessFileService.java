@@ -35,8 +35,6 @@ public class ProcessFileService {
     LoadDataServices loadDataServices;
     List<LoadData> listData;
     Map<Long, String> mapUsers = new HashMap<>();
-    @Value("${config.upload.sites}")
-    private String sites;
     @Value("${config.process.search.data.size}")
     private int processDataSize;
     @Value("${config.process.save.data.size}")
@@ -67,7 +65,7 @@ public class ProcessFileService {
                         processData(rows, load);
                         rows.clear();
                     }
-                    if(listData.size() == processSaveSize) {
+                    if(listData.size() >= processSaveSize) {
                         saveData(load);
                     }
                 }
@@ -101,8 +99,10 @@ public class ProcessFileService {
     }
 
     private void loadUsers(List<ItemResponse> items) {
-       List<Long> ids = items.stream().filter(item -> HttpStatus.OK.value() == item.getCode())
-               .map(ItemResponse::getBody).map(ItemResponse.ItemBody::getSeller_id).collect(Collectors.toList());
+       List<Long> ids = new ArrayList<>();
+       items.stream().filter(item -> HttpStatus.OK.value() == item.getCode()).collect(Collectors.toList()).forEach(
+            itemResponse -> ids.add(itemResponse.getBody().getSeller_id())
+       );
        ids.removeAll(mapUsers.keySet());
        List<UserResponse> userResponses = mercadoLibreService.getUsersByIds(ids);
         userResponses.stream().filter(userResponse -> HttpStatus.OK.value() == userResponse.getCode())
@@ -113,6 +113,7 @@ public class ProcessFileService {
         if(item != null) {
             ItemResponse.ItemBody body = item.getBody();
             LoadData data = new LoadData();
+            data.setSite(row.getSite());
             data.setPrice(body.getPrice());
             data.setStartTime(body.getStart_time());
             data.setName(loadDataServices.getCategoryBySiteAndId(row.getSite(), body.getCategory_id()));

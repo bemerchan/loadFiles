@@ -20,34 +20,39 @@ import java.time.LocalDateTime;
 <span class="fc" id="L20">	private String id;</span>
 
 	@NotNull
+	@Schema(description = &quot;Id del sitio&quot;)
+	@Column(name=&quot;site&quot;)
+<span class="fc" id="L25">	private String site;</span>
+
+	@NotNull
 	@Schema(description = &quot;Id de la carga&quot;)
 	@Column(name=&quot;load_id&quot;)
-<span class="fc" id="L25">	private Long loadId;</span>
+<span class="fc" id="L30">	private Long loadId;</span>
 
 	@Schema(description = &quot;Id del resgistro&quot;)
 	@Column(name = &quot;record_id&quot;)
 	@NotNull
-<span class="fc" id="L30">	private String recordId;</span>
+<span class="fc" id="L35">	private String recordId;</span>
 
 	@Schema(description = &quot;Precio&quot;)
 	@Column(name = &quot;price&quot;)
-<span class="fc" id="L34">	private Double price;</span>
+<span class="fc" id="L39">	private Double price;</span>
 
 	@Schema(description = &quot;Fecha de inicio&quot;)
 	@Column(name=&quot;start_time&quot;)
-<span class="fc" id="L38">	private LocalDateTime startTime;</span>
+<span class="fc" id="L43">	private LocalDateTime startTime;</span>
 
 	@Schema(description = &quot;Nombre de la categoria&quot;)
 	@Column(name = &quot;name&quot;)
-<span class="fc" id="L42">	private String name;</span>
+<span class="fc" id="L47">	private String name;</span>
 
 	@Schema(description = &quot;Moneda&quot;)
 	@Column(name = &quot;description&quot;)
-<span class="fc" id="L46">	private String description;</span>
+<span class="fc" id="L51">	private String description;</span>
 
 	@Schema(description = &quot;Nombre de usuario&quot;)
 	@Column(name = &quot;nickname&quot;)
-<span class="fc" id="L50">	private String nickname;</span>
+<span class="fc" id="L55">	private String nickname;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

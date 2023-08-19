@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -59,7 +58,7 @@ public class UploadApiTest {
 
         List<LoadData> detail = loadDataRepository.findByLoadId(id.longValue());
         Load load = loadRepository.findById(id.longValue()).get();
-        assertTrue(detail.size() > 0);
+        assertEquals(3,detail.size());
         assertEquals("EXITOSO", load.getStatus());
     }
 
